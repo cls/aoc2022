@@ -1,0 +1,8 @@
+cabal-version:       >=1.10
+
+name:                aoc2022
+version:             0.1.0.0
+synopsis:            Advent of Code 2022
+author:              Connor Lane Smith
+maintainer:          cls@lubutu.com
+build-type:          Simple
