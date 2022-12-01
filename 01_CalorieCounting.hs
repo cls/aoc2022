@@ -3,8 +3,8 @@ import Data.List (sortBy)
 paragraphs :: String -> [[String]]
 paragraphs = foldr para [[]] . lines
   where
-    para ""    ps  =     []:ps
-    para ln (p:ps) = (ln:p):ps
+    para "" ps = []:ps
+    para ln ps = let p:ps' = ps in (ln:p):ps'
 
 main :: IO ()
 main = do input <- getContents
