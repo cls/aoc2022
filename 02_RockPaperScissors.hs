@@ -1,3 +1,10 @@
+main :: IO ()
+main = do input <- lines <$> getContents
+          print . part1 . map read $ input
+          print . part2 . map read $ input
+
+{- Part 1 -}
+
 data Shape = Rock | Paper | Scissors
   deriving (Eq)
 
@@ -18,14 +25,10 @@ p `beats` r = p == beat r
 data PlayAndResponse = PlayAndResponse Shape Shape
 
 instance Read PlayAndResponse where
-  readsPrec _ s = [(PlayAndResponse p r, u) | (p, ' ':t) <- reads s, (r, u) <- reads t]
+  readsPrec _ s = [(PlayAndResponse p r, u) | (p, ' ':t) <- reads s,
+                                              (r,     u) <- reads t]
 
 data Outcome = Lose | Draw | Win
-
-instance Read Outcome where
-  readsPrec _ ('X':t) = [(Lose, t)]
-  readsPrec _ ('Y':t) = [(Draw, t)]
-  readsPrec _ ('Z':t) = [(Win,  t)]
 
 outcome :: PlayAndResponse -> Outcome
 outcome (PlayAndResponse p r) | p `beats` r = Lose
@@ -48,10 +51,24 @@ instance Score Outcome where
 instance Score PlayAndResponse where
   score x@(PlayAndResponse _ r) = score (outcome x) + score r
 
+instance Score a => Score [a] where
+  score = sum . map score
+
+part1 :: [PlayAndResponse] -> Int
+part1 = score
+
+{- Part 2 -}
+
 data PlayAndOutcome = PlayAndOutcome Shape Outcome
 
+instance Read Outcome where
+  readsPrec _ ('X':t) = [(Lose, t)]
+  readsPrec _ ('Y':t) = [(Draw, t)]
+  readsPrec _ ('Z':t) = [(Win,  t)]
+
 instance Read PlayAndOutcome where
-  readsPrec _ s = [(PlayAndOutcome p o, u) | (p, ' ':t) <- reads s, (o, u) <- reads t]
+  readsPrec _ s = [(PlayAndOutcome p o, u) | (p, ' ':t) <- reads s,
+                                             (o,     u) <- reads t]
 
 loseTo :: Shape -> Shape
 loseTo Rock     = Scissors
@@ -66,7 +83,5 @@ response (PlayAndOutcome p Win)  = beat p
 instance Score PlayAndOutcome where
   score x@(PlayAndOutcome _ o) = score o + score (response x)
 
-main :: IO ()
-main = do input <- getContents
-          print . sum . map score $ (map read . lines $ input :: [PlayAndResponse])
-          print . sum . map score $ (map read . lines $ input :: [PlayAndOutcome])
+part2 :: [PlayAndOutcome] -> Int
+part2 = score
