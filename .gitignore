@@ -1,2 +1,3 @@
 *.swp
+/c/bin/
 /hs/dist-newstyle/
