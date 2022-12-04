@@ -28,11 +28,11 @@ part1 = sum . map (fromEnum . uncurry fullyOverlaps)
 
 {- Part 2 -}
 
-partlyContains :: Range -> Range -> Bool
-Range a b `partlyContains` Range c d = (a <= c && b >= c) || (a <= d && b >= d)
+endsOverlap :: Range -> Range -> Bool
+Range a b `endsOverlap` Range c d = (a <= c && b >= c) || (a <= d && b >= d)
 
 partlyOverlaps :: Range -> Range -> Bool
-x `partlyOverlaps` y = x `partlyContains` y || y `partlyContains` x
+x `partlyOverlaps` y = x `fullyOverlaps` y || x `endsOverlap` y
 
 part2 :: [(Range, Range)] -> Int
 part2 = sum . map (fromEnum . uncurry partlyOverlaps)

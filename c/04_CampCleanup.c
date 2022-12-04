@@ -7,8 +7,8 @@ struct range {
     long hi;
 };
 
-static int fully_contains(struct range x, struct range y);
-static int partly_contains(struct range x, struct range y);
+static int full_overlap(struct range x, struct range y);
+static int ends_overlap(struct range x, struct range y);
 
 int
 main(void)
@@ -43,8 +43,8 @@ main(void)
         struct range x = {a, b};
         struct range y = {c, d};
 
-        full_overlaps +=  fully_contains(x, y) ||  fully_contains(y, x);
-        part_overlaps += partly_contains(x, y) || partly_contains(y, x);
+        full_overlaps += full_overlap(x, y);
+        part_overlaps += full_overlap(x, y) || ends_overlap(x, y);
     }
 
     printf("%d\n%d\n", full_overlaps, part_overlaps);
@@ -53,13 +53,13 @@ main(void)
 }
 
 int
-fully_contains(struct range x, struct range y)
+full_overlap(struct range x, struct range y)
 {
-    return x.lo <= y.lo && x.hi >= y.hi;
+    return (x.lo <= y.lo && x.hi >= y.hi) || (y.lo <= x.lo && y.hi >= x.hi);
 }
 
 int
-partly_contains(struct range x, struct range y)
+ends_overlap(struct range x, struct range y)
 {
     return (x.lo <= y.lo && x.hi >= y.lo) || (x.lo <= y.hi && x.hi >= y.hi);
 }
