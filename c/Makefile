@@ -5,6 +5,7 @@ BIN = \
     bin/01_CalorieCounting \
     bin/02_RockPaperScissors \
     bin/03_RucksackReorganization \
+    bin/04_CampCleanup \
 
 all: $(BIN)
 
