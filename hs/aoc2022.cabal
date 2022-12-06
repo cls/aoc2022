@@ -31,3 +31,8 @@ executable 05_SupplyStacks
   main-is:             05_SupplyStacks.hs
   build-depends:       base >=4.13 && <4.14
   default-language:    Haskell2010
+
+executable 06_TuningTrouble
+  main-is:             06_TuningTrouble.hs
+  build-depends:       base >=4.13 && <4.14, containers
+  default-language:    Haskell2010
