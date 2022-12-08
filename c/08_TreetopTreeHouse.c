@@ -33,7 +33,7 @@ main(void)
 
     int h = len / w;
 
-#define POS(X, Y) ((X) + (Y)*h)
+#define POS(X, Y) ((X) + (Y)*w)
 
     char *vis = calloc(w * h, sizeof *vis);
     if (!vis) return 1;
