@@ -24,10 +24,10 @@ instance Read Value where
                ++ [(List xs, t) | (xs, t) <- reads s]
 
 instance Ord Value where
-  Int x       `compare` Int y       = x `compare` y
-  List xs     `compare` List ys     = xs `compare` ys
-  List xs     `compare` Int x       = List xs `compare` List [Int x]
-  Int x       `compare` List xs     = List [Int x] `compare` List xs
+  Int x   `compare` Int y   = x `compare` y
+  List xs `compare` List ys = xs `compare` ys
+  List xs `compare` Int x   = xs `compare` [Int x]
+  Int x   `compare` List xs = [Int x] `compare` xs
 
 instance Eq Value where
   x == y = (x `compare` y) == EQ
