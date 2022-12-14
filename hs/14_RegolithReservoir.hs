@@ -41,7 +41,7 @@ union :: Cave -> Cave -> Cave
 union = IntMap.unionWith IntSet.union
 
 unions :: [Cave] -> Cave
-unions = foldr union IntMap.empty
+unions = IntMap.unionsWith IntSet.union
 
 build :: Wall -> Cave
 build = unions . map plot . concatMap (uncurry wall) . pairs . points
@@ -84,5 +84,6 @@ part1 = sandVolume (const Abyss)
 {- Part 2 -}
 
 part2 :: Cave -> Int
-part2 cave = let ground x = let y = IntMap.foldr max 0 . IntMap.map IntSet.findMax $ cave in Settled (x, y+1)
+part2 cave = let y = IntMap.foldr max 0 . IntMap.map IntSet.findMax $ cave
+                 ground x = Settled (x, y+1)
               in sandVolume ground cave
