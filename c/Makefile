@@ -1,4 +1,4 @@
-CFLAGS  = -pedantic -std=c99 -O3 -Wall -Werror
+CFLAGS  = -pedantic -std=c11 -O3 -Wall -Werror
 LDFLAGS =
 
 BIN = \
@@ -7,6 +7,7 @@ BIN = \
     bin/03_RucksackReorganization \
     bin/04_CampCleanup \
     bin/08_TreetopTreeHouse \
+    bin/20_GrovePositioningSystem \
 
 all: $(BIN)
 
